@@ -15,15 +15,30 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
+
         $rolesList = [
             [
-                'name' => RolesHelper::ADMIN;
-                'description' => 'Admin role has all permissions';
+                'id' => RolesHelper::ADMIN_ID,
+                'name' => RolesHelper::ADMIN,
+                'description' => 'Admin role has all permissions',
             ],
             [
-                'name' => RolesHelper::CUSTOMER;
-                'description' => 'Customer role has permissions for online shop';
+                'id' => RolesHelper::CUSTOMER_ID,
+                'name' => RolesHelper::CUSTOMER,
+                'description' => 'Customer role has permissions for online shop',
             ]
         ];
+
+        foreach ($rolesList as $role) {
+            $currentRole = Role::where('is', $role['is'])->first();
+
+            if ($currentRole === null) {
+                $currentRole = new Role();
+            }
+            $currentRole->id = $role['id'];
+            $currentRole->name = $role['name'];
+            $currentRole->description = $role['description'];
+            $currentRole->saveOrFail();
+        }
     }
 }

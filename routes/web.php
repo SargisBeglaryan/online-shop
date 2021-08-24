@@ -19,4 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('/dashboard', App\Http\Controllers\DashboardController::class);
+    Route::resource('/users', App\Http\Controllers\UsersController::class);
+    Route::resource('/digital-products', App\Http\Controllers\DigitalProductsController::class);
+    Route::resource('/physical-products', App\Http\Controllers\PhysicalProductsController::class);
+});

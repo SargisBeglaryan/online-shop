@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTypesTable extends Migration
+class CreateDigitalProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateProductsTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('products_types', function (Blueprint $table) {
+        Schema::create('digital_products', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('dimension')->nullable();
+            $table->boolean('is_touchable')->unsigned();
+            $table->string('screen_size');           
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateProductsTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products_types');
+        Schema::dropIfExists('digital_products');
     }
 }

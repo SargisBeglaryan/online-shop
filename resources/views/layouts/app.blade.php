@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    Home
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,23 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @if(Auth::user() && Auth::user()->isAdmin())
+                            <li class="nav-item dropdown">
+                                <a id="productsDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Products
+                                </a>
 
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="productsDropdown">
+                                    <a class="dropdown-item" href="{{ route('digital-products.index') }}">
+                                        {{ __('Digital') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('physical-products.index') }}">
+                                        {{ __('Physical') }}
+                                    </a>
+                                </div>
+                            </li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
