@@ -56,7 +56,7 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label text-md-right" for="touchableProduct">Is product touchable</label>
                             <div class="col-md-6">
-                                <input class="form-check-input ml-1 @error('touchable') is-invalid @enderror" type="checkbox" id="touchableProduct" name="touchable" value="{{ old('touchable') }}" required autocomplete="touchable" autofocus>
+                                <input class="form-check-input ml-1 @error('touchable') is-invalid @enderror" {{ old('touchable') ? 'checked' : ''}} type="checkbox" id="touchableProduct" name="touchable" value="Yes" autocomplete="touchable" autofocus>
 
                                 @error('touchable')
                                 <span class="invalid-feedback" role="alert">

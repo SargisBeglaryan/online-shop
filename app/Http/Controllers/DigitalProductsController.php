@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\DigitalProduct;
 use Illuminate\Http\Request;
 use App\Repositories\ProductRepository;
+use App\Http\Requests\DigitalProjectRequest;
 use Auth;
+use App\Helpers\ProductsHelper;
+use App\Helpers\ErrorMessage;
+use Illuminate\Support\Facades\DB;
+
 
 class DigitalProductsController extends Controller
 {
@@ -52,7 +57,18 @@ class DigitalProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $request->merge(['type' => ProductsHelper::DIGITAL_PRODUCTS]);
+
+            $this->productService->createProduct($request);
+            DB::commit();
+            
+            return redirect()->route('digital-products.index')->with('success', 'Successfully updated');
+        } catch (\Throwable $ex) {
+            DB::rollback();
+            return redirect()->route('digital-products.index')->with('error', ErrorMessage::UNKNOWN_ERROR);
+        }
     }
 
     /**

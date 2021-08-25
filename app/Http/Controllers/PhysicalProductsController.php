@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\PhysicalProduct;
 use Illuminate\Http\Request;
 use App\Repositories\ProductRepository;
+use App\Http\Requests\PhysicalProjectRequest;
 use Auth;
+use App\Helpers\ProductsHelper;
+use App\Helpers\ErrorMessage;
+use Illuminate\Support\Facades\DB;
 
 class PhysicalProductsController extends Controller
 {
@@ -50,7 +54,19 @@ class PhysicalProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $request->merge(['type' => ProductsHelper::PHYSICAL_PRODUCTS]);
+
+            $this->productService->createProduct($request);
+            DB::commit();
+
+            return redirect()->route('physical-products.index')->with('success', 'Successfully updated');
+        } catch (\Throwable $ex) {
+            dd($ex->getMessage());
+            DB::rollback();
+            return redirect()->route('physical-products.index')->with('error', ErrorMessage::UNKNOWN_ERROR);
+        }
     }
 
     /**

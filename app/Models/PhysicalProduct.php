@@ -11,6 +11,6 @@ class PhysicalProduct extends Model
 
     public function product()
     {
-        return $this->morphOne(Product::class, 'product_table_id');
+        return $this->morphOne(Product::class, 'productable');
     }
 }

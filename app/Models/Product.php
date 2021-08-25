@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    public function products_table_id()
+    public function productable()
     {
         return $this->morphTo();
     }

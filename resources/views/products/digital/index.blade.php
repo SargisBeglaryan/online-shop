@@ -8,9 +8,20 @@
                 <div class="card-header">{{ __('Digital Products') }}</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                    @if (session('success'))
+                        <div class="alert mb-2 alert-success alert-dismissible fade show" role="alert">
+                          <strong>{{ session('success') }}</strong>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="alert mb-2 alert-danger alert-dismissible fade show" role="alert">
+                          <strong>{{ session('error') }}</strong>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
                         </div>
                     @endif
                     <a class="btn btn-success" href="{{route('digital-products.create')}}" role="button">Create</a>
