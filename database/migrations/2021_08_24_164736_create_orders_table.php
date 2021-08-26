@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->json('products');
             $table->date('order_date');
+            $table->string('total');
             
             $table->timestamps();
 

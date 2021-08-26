@@ -23,7 +23,7 @@ class ProductService implements ProductRepository {
     }
 
     public function getProductById(int $id): ?Product {
-
+        return Product::with('productable')->findOrFail($id);
     }
 
     public function getDigitalProducts(): ?LengthAwarePaginator {

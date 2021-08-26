@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ErrorMessage;
+use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Repositories\OrderRepository;
 
 class OrdersController extends Controller
 {
+    protected $orderService;
+
+    public function __construct(OrderRepository $orderService) {        
+
+        $this->orderService = $orderService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -81,5 +90,21 @@ class OrdersController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function checkout(Request $request) {
+        
+        DB::beginTransaction();
+        try {
+
+            $this->orderService->checkout($request);
+            DB::commit();
+            
+            return redirect()->route('dashboard.index')->with('success', 'Successfully updated');
+        } catch (\Throwable $ex) {
+            dd($ex->getMessage());
+            DB::rollback();
+            return redirect()->route('dashboard.index')->with('error', ErrorMessage::UNKNOWN_ERROR);
+        }
     }
 }

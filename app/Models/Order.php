@@ -12,7 +12,9 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'description',
-        'order_date'
+        'order_date',
+        'products',
+        'total'
     ];
 
     protected $casts = [
