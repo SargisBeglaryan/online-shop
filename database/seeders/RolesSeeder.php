@@ -30,7 +30,7 @@ class RolesSeeder extends Seeder
         ];
 
         foreach ($rolesList as $role) {
-            $currentRole = Role::where('is', $role['is'])->first();
+            $currentRole = Role::where('id', $role['id'])->first();
 
             if ($currentRole === null) {
                 $currentRole = new Role();
