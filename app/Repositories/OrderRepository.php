@@ -11,4 +11,6 @@ interface OrderRepository {
 
     public function checkout(Request $request): void;
 
+    public function getUserOrdersList(): ?Collection;
+
 }

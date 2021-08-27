@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\OrderRepository;
 
 class DashboardController extends Controller
 {
@@ -11,9 +12,11 @@ class DashboardController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        
+    protected $orderService;
+
+    public function __construct(OrderRepository $orderService) {        
+
+        $this->orderService = $orderService;
     }
 
     /**
@@ -23,6 +26,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $userOrders = $this->orderService->getUserOrdersList();
+        return view('home')->with(compact('userOrders'));
     }
 }

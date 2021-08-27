@@ -100,9 +100,8 @@ class OrdersController extends Controller
             $this->orderService->checkout($request);
             DB::commit();
             
-            return redirect()->route('dashboard.index')->with('success', 'Successfully updated');
+            return redirect()->route('dashboard.index')->with('success', 'The order successfully done!');
         } catch (\Throwable $ex) {
-            dd($ex->getMessage());
             DB::rollback();
             return redirect()->route('dashboard.index')->with('error', ErrorMessage::UNKNOWN_ERROR);
         }

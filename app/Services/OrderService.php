@@ -25,10 +25,13 @@ class OrderService implements OrderRepository {
                 $product = [];
                 $product['name'] = $details['name'];
                 $product['price'] = $details['price'];
+                $product['tax'] = Auth::user()->is_with_tax ? Auth::user()->tax_price : 0;
                 $product['quantity'] = $details['quantity'];
                 $product['subtotal'] = '$' . ($details['price'] * $details['quantity']);
                 $products[] = $product;
             }
+
+            $total = Auth::user()->is_with_tax ? $request->total + Auth::user()->tax_price : $request->total;
 
             $order = new Order();
             $order->user_id = Auth::user()->id;
@@ -39,6 +42,14 @@ class OrderService implements OrderRepository {
 
             Session::forget('cart');
         }
+
+        //payment transaction
+
+    }
+
+    public function getUserOrdersList(): ?Collection {
+
+        return Order::where('user_id', Auth::user()->id)->get();
 
     }
 }
